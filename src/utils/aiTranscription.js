@@ -73,12 +73,19 @@ function bufferToWav(buffer) {
   return new Blob([outBuffer], { type: 'audio/wav' });
 }
 
-// Cloudflare High-Speed Secure Tunnel directly to our local GPU/CPU Hinglish AI Server
+// Auto-detect backend: if running on laptop (localhost / 127.0.0.1), use fast direct local connection http://127.0.0.1:5000
+// If running on phone/deployed site, use the Cloudflare live tunnel URL
+const IS_LOCAL_HOST = typeof window !== 'undefined' && 
+  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
 export const DEFAULT_CLOUD_URL = "https://inbox-mpg-traditional-efficiently.trycloudflare.com";
 
 // Dynamic Server Endpoint getter & setter
 export function getBackendUrl() {
-  return localStorage.getItem("captive_backend_url") || import.meta.env.VITE_BACKEND_URL || DEFAULT_CLOUD_URL;
+  const custom = localStorage.getItem("captive_backend_url");
+  if (custom) return custom;
+  if (IS_LOCAL_HOST) return "http://127.0.0.1:5000";
+  return import.meta.env.VITE_BACKEND_URL || DEFAULT_CLOUD_URL;
 }
 
 export function setBackendUrl(url) {
