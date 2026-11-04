@@ -73,8 +73,8 @@ function bufferToWav(buffer) {
   return new Blob([outBuffer], { type: 'audio/wav' });
 }
 
-// Primary Default Cloud Server (Render Live Backend) + Localhost Fallback
-export const DEFAULT_CLOUD_URL = "https://captive.onrender.com";
+// Primary Default Cloud Server (Localtunnel live tunnel to local server with fallback)
+export const DEFAULT_CLOUD_URL = "https://late-rings-play.loca.lt";
 
 // Dynamic Server Endpoint getter & setter
 export function getBackendUrl() {
@@ -108,11 +108,14 @@ export async function transcribeWithLocalServer(wavBlob, mode = 'hinglish') {
     response = await fetch(endpoint, {
       method: 'POST',
       body: form,
+      headers: {
+        'Bypass-Tunnel-Reminder': 'true'
+      }
     });
   } catch (networkErr) {
     throw new Error(
       `Backend server (${serverUrl}) se connect nahi ho paya! ` +
-      'Phone se use karne ke liye top-right Settings icon (⚙️) me jakar apna public server URL set karein.'
+      'Kripya internet check karein ya server reload hone ka wait karein.'
     );
   }
 
