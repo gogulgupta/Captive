@@ -1,0 +1,129 @@
+================================================================================
+                    CAPTIONCRAFT - PROJECT DOCUMENTATION & RUN GUIDE
+================================================================================
+Generated Date: 2026-11-04
+Project Location: C:\Users\Gogul gupta\.gemini\antigravity\scratch\caption-craft
+
+--------------------------------------------------------------------------------
+1. PROJECT OVERVIEW
+--------------------------------------------------------------------------------
+CaptionCraft ek automated Reel/Shorts Caption Generator & Editor website hai.
+Isme raw MP4/MOV video upload karke local AI Speech-To-Text model se accurate 
+Hinglish captions, word-level timestamps, kinetic animations (Hormozi style), 
+auto-emojis, aur direct MP4 video export milta hai bina kisi external cloud API key ke.
+
+--------------------------------------------------------------------------------
+2. KEY FEATURES IMPLEMENTED
+--------------------------------------------------------------------------------
+1. Offline / Local Speech-to-Text:
+   - Cloud API dependency (Gemini / Groq) ko completely remove kiya.
+   - Local Python Flask server (`server.py`) deploy kiya jo `faster-whisper`
+     (small model) use karta hai CPU optimized int8 inference ke sath.
+   - PyAV version 19+ compatibility fix (`metadata_errors` patch).
+
+2. Hinglish & English Mode Toggle:
+   - UI me toggle diya: "🇮🇳 Hinglish (Recommended)" vs "🇬🇧 English".
+   - Creator-grade Hindi-to-Roman Hinglish engine banaya jisme 500+ daily spoken
+     Hindi words ka dictionary mapping aur Schwa-Deletion rule shamil hai.
+     (e.g., 'तो आज हम जानेंगे सेंसर कैसे काम करता है' -> 'toh aaj hum jaanenge sensor kaise kaam karta hai')
+
+3. Voice Cadence Auto-Sync & Word Spacing:
+   - VideoPlayer me dynamic chunking lagaya:
+     - ⚡ Auto: Bolne ki speed ke hisaab se 1 ya 2 words frame me dikhenge.
+     - 1 Word / 2 Words / 3 Words selector.
+   - Text spacing aur emoji pop positions clean kiye taaki words overlap na karein.
+
+4. 9+ Viral Creator Caption Presets:
+   - Hormozi Gold (🔥 Most Viral - Yellow/Green Bold Punch)
+   - Cyber Beast (⚡ High Energy - Red/Cyan Neon)
+   - Ali Abdaal Clean (💡 Edu / Story - Dark Translucent Box + Warm Yellow)
+   - Tokyo Cyberpunk (🔮 Glow Viral - Electric Cyan & Hot Pink Glow)
+   - Cinematic Lux (🎬 Travel / Lux - Luxury Amber & Slate Contrast)
+   - Matrix Hacker (💻 Tech / AI - Terminal Lime Green + Deep Code Box)
+   - Aesthetic Clean (✨ Podcast / Vlog - Sky Blue Minimalist Box)
+   - Comic Pop (🎉 Fun & Humor - Purple/Yellow Bouncy Outline)
+   - Sunset Miami (🌅 Warm Vibes - Coral Orange Gradient Tone)
+
+5. Smart Semantic Auto-Emoji Tagging:
+   - Har faltu common word par emoji lagana band kar diya (Blacklist: hai, tha, ka, ki, se, etc.)
+   - Sirf High-Impact & Important Trigger Words par contextual emoji lagti hai:
+     * Tech & Hardware: sensor/sensors (📡), camera (📷), phone (📱), video/reel (🎬), tool (🛠️), machine/kaam/karta (⚙️)
+     * Knowledge & Curiosity: jaanenge/jaano (🔍), samjho/idea (💡), batao (🗣️), soch/dimag (🧠), kaise/kyun (🤔/❓)
+     * Money / Profit: paisa (💸), paise (💰), lakh (💵), crore (🤑), kamao/kamana (💰), profit (📈)
+     * Viral / Hype: viral (🔥), bawaal (💥), crazy (🤯), secret/raaz (🤫), trick (🎯), magic (✨)
+     * Speed & Urgency: growth (🚀), fast/jaldi (⚡), time/waqt (⏱️/⏳), aaj (📅)
+     * Attention & Warning: warning/khatra (⚠️), ruko/stop (🛑), galti/mat (❌), shock (😱), dekho (👀)
+     * Community & Love: bhai/bhaiyo (🤜🤛), dost (🤝), family (👨‍👩‍👧), like/follow (👍/🔔)
+   - Stem / Prefix matching enabled (e.g., 'sensors' ya 'sensor' dono par 📡, 'kamaye' par 💰, 'jaanenge' par 🔍).
+
+6. Text Position Controls (Uper / Niche):
+   - Video Player par direct floating Up (▲) aur Down (▼) buttons add kiye.
+   - "Motion & Styles" tab me smooth slider + Quick Jump Buttons:
+     * Top (25%)
+     * Center (50%)
+     * Bottom Reel Safe (68% - Recommended)
+     * Lower (82%)
+
+6. Direct MP4 Video Export Engine:
+   - Export modal me quality options add kiye:
+     * Resolutions: 720p HD, 1080p Full HD (Reels/Shorts best), 4K Ultra HD.
+     * Framerates: 30 FPS vs 60 FPS (Ultra Smooth).
+   - Canvas stream + Audio stream capture mechanism se captions, emojis aur
+     kinetic animations directly burn hokar complete MP4/WebM video download hoti hai.
+   - Audio routing fix: Video element ko captureStream() aur WebAudio API ke sath
+     bind kiya jisse exported video me original clear sound/audio include hoti hai.
+
+--------------------------------------------------------------------------------
+3. FILE STRUCTURE & IMPORTANT CHANGES
+--------------------------------------------------------------------------------
+- server.py:
+  Local backend service (Flask + faster-whisper + Hinglish transliteration engine).
+  Port: http://127.0.0.1:5000. Endpoint: POST /transcribe.
+
+- src/utils/aiTranscription.js:
+  Video se WebAudio API ke through 16kHz WAV nikalta hai aur local Python server ko bhejta hai.
+
+- src/components/CaptionTimeline.jsx:
+  AI Auto-Captions button, Hinglish/English language toggle, word editing, timestamp jumping,
+  emoji picker aur script paste interface.
+
+- src/components/VideoPlayer.jsx:
+  Dynamic captions rendering, Hormozi kinetic bounces, word pop animation, audio ducking,
+  SFX trigger aur safe-zone guides.
+
+- src/components/StyleCustomizer.jsx:
+  Fonts, colors, text stroke, Y-position, aur words-per-frame (Auto Voice Sync, 1, 2, 3) controls.
+
+- src/components/ExportModal.jsx:
+  MP4 export dialog with 720p / 1080p / 4K and 30fps / 60fps selection + real-time canvas
+  video rendering and audio merging.
+
+- src/App.jsx:
+  Main layout, state management (videoSrc, videoFile, words, style, duration), tab switching.
+
+--------------------------------------------------------------------------------
+4. HOW TO RUN THE PROJECT (START COMMANDS)
+--------------------------------------------------------------------------------
+
+STEP 1: Python Transcription Server Start Karein
+   Terminal khol kar ye command run karein:
+   > cd "C:\Users\Gogul gupta\.gemini\antigravity\scratch\caption-craft"
+   > python server.py
+
+   (Server http://127.0.0.1:5000 par start ho jayega)
+
+STEP 2: React Frontend Start Karein
+   Dusre terminal me:
+   > cd "C:\Users\Gogul gupta\.gemini\antigravity\scratch\caption-craft"
+   > npm run dev -- --host
+
+   (Website http://localhost:5173 par khul jayegi)
+
+STEP 3: Testing / Workflow
+   1. Browser me http://localhost:5173 open karein.
+   2. Raw video (.mp4/.mov) upload karein.
+   3. "🇮🇳 Hinglish" select rakhein aur "🎤 AI Auto-Captions" par click karein.
+   4. Video play karke preview dekhein.
+   5. Top-right me "Export Reel" dabayein, 1080p / 60fps select karein aur "Export Video" click karein.
+================================================================================
+
