@@ -231,8 +231,8 @@ _model = None
 def get_model():
     global _model
     if _model is None:
-        model_name = os.environ.get("WHISPER_MODEL", "tiny")
-        print(f"⏳ Loading faster-whisper {model_name} model...")
+        model_name = os.environ.get("WHISPER_MODEL", "small")
+        print(f"⏳ Loading faster-whisper {model_name} model (high precision)...")
         from faster_whisper import WhisperModel
         _model = WhisperModel(
             model_name,
