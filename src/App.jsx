@@ -249,26 +249,6 @@ export default function App() {
               )}
             </div>
 
-            {/* Feature highlights badge */}
-            <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
-              <div className="p-2.5 rounded-xl bg-zinc-900/40 border border-zinc-800/80">
-                <div className="text-amber-400 text-sm font-bold">Hinglish</div>
-                <div className="text-[10px] text-zinc-400 mt-0.5">Auto Roman Hindi</div>
-              </div>
-              <div className="p-2.5 rounded-xl bg-zinc-900/40 border border-zinc-800/80">
-                <div className="text-amber-400 text-sm font-bold">Kinetic Pop</div>
-                <div className="text-[10px] text-zinc-400 mt-0.5">Hormozi Bounces</div>
-              </div>
-              <div className="p-2.5 rounded-xl bg-zinc-900/40 border border-zinc-800/80">
-                <div className="text-amber-400 text-sm font-bold">Smart Emojis</div>
-                <div className="text-[10px] text-zinc-400 mt-0.5">Auto-tagging 🔥</div>
-              </div>
-              <div className="p-2.5 rounded-xl bg-zinc-900/40 border border-zinc-800/80">
-                <div className="text-amber-400 text-sm font-bold">Audio Ducking</div>
-                <div className="text-[10px] text-zinc-400 mt-0.5">Voice Sync BGM</div>
-              </div>
-            </div>
-
           </div>
 
         </div>
