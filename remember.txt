@@ -56,7 +56,13 @@ auto-emojis, aur direct MP4 video export milta hai bina kisi external cloud API 
      * Community & Love: bhai/bhaiyo (🤜🤛), dost (🤝), family (👨‍👩‍👧), like/follow (👍/🔔)
    - Stem / Prefix matching enabled (e.g., 'sensors' ya 'sensor' dono par 📡, 'kamaye' par 💰, 'jaanenge' par 🔍).
 
-6. Text Position Controls (Uper / Niche):
+6. Custom BGM Audio Upload from System:
+   - "BGM & Sound FX" tab me direct system audio uploader add kiya (MP3 / WAV / M4A / AAC).
+   - Local audio choose karte hi custom BGM live loop ho jayega video ke sath.
+   - Smart Speech Ducking: Custom background music bolte waqt automatically slow ho jayega aur pause par loud ho jayega.
+   - Volume slider, active status badge aur 1-click remove option.
+
+7. Text Position Controls (Uper / Niche):
    - Video Player par direct floating Up (▲) aur Down (▼) buttons add kiye.
    - "Motion & Styles" tab me smooth slider + Quick Jump Buttons:
      * Top (25%)

@@ -30,6 +30,8 @@ export default function App() {
   const [selectedTrack, setSelectedTrack] = useState("trap-phonk");
   const [bgmVolume, setBgmVolume] = useState(0.2);
   const [sfxEnabled, setSfxEnabled] = useState(true);
+  const [customAudioUrl, setCustomAudioUrl] = useState(null);
+  const [customAudioName, setCustomAudioName] = useState("");
 
   // Navigation tab for settings panel
   const [activeTab, setActiveTab] = useState("captions"); // 'captions' | 'style' | 'audio'
@@ -38,15 +40,15 @@ export default function App() {
   const [isExportOpen, setIsExportOpen] = useState(false);
   const [isAIOpen, setIsAIOpen] = useState(false);
 
-  // Start / stop synthesized BGM on play/pause
+  // Start / stop synthesized or custom BGM on play/pause
   useEffect(() => {
     if (isPlaying && selectedTrack !== "none") {
-      startBgmSynth(selectedTrack, bgmVolume, false);
+      startBgmSynth(selectedTrack, bgmVolume, customAudioUrl);
     } else {
       stopBgmSynth();
     }
     return () => stopBgmSynth();
-  }, [isPlaying, selectedTrack]);
+  }, [isPlaying, selectedTrack, customAudioUrl]);
 
   // Handle uploaded video file
   const handleVideoUpload = (url, fileName, file) => {
@@ -239,6 +241,10 @@ export default function App() {
                   sfxEnabled={sfxEnabled}
                   setSfxEnabled={setSfxEnabled}
                   isPlaying={isPlaying}
+                  customAudioUrl={customAudioUrl}
+                  setCustomAudioUrl={setCustomAudioUrl}
+                  customAudioName={customAudioName}
+                  setCustomAudioName={setCustomAudioName}
                 />
               )}
             </div>
