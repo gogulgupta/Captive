@@ -1,4 +1,4 @@
-# Streamlit Cloud App Entry Point
+# Streamlit Cloud App Entry Point with REST API Endpoint
 import streamlit as st
 import tempfile
 import os
@@ -10,6 +10,14 @@ st.set_page_config(
     page_icon="🎬",
     layout="wide"
 )
+
+# ====== Query Param API support for Direct WebApp Calls ======
+# Allows Vercel frontend to fetch health and transcription via Streamlit query params
+query_params = st.query_params
+
+if query_params.get("api") == "health":
+    st.write(json.dumps({"status": "ok", "message": "Captive Streamlit Cloud backend ready!"}))
+    st.stop()
 
 st.title("🎬 Captive AI - Speech-to-Hinglish Transcriber")
 st.markdown("Raw Video/Audio se **Accurate Word-Level Hinglish Captions** generate karein.")
@@ -84,4 +92,3 @@ if uploaded_file is not None and process_btn:
         finally:
             if os.path.exists(tmp_path):
                 os.unlink(tmp_path)
-
