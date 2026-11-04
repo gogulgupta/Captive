@@ -25,7 +25,7 @@ export default function StyleCustomizer({ style, setStyle }) {
         <label className="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider">
           Viral Presets
         </label>
-        <div className="grid grid-cols-2 gap-2 mt-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
           {CAPTION_PRESETS.map(preset => {
             const isSelected = style.id === preset.id;
             return (

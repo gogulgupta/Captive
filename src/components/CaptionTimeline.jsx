@@ -187,34 +187,33 @@ export default function CaptionTimeline({
 
       {/* Uploaded Video Action Prompt */}
       {customFileName && (
-        <div className="mt-3 p-3.5 rounded-xl bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-transparent border border-amber-500/30 flex flex-col gap-3">
+        <div className="mt-3 p-3 sm:p-3.5 rounded-xl bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-transparent border border-amber-500/30 flex flex-col gap-2.5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div className="text-xs text-amber-200">
-              <span className="font-bold">Uploaded:</span> {customFileName}
+              <span className="font-bold">Uploaded:</span> <span className="break-all">{customFileName}</span>
               <div className="text-[11px] text-zinc-400 mt-0.5">
-                Video duration: {videoDuration.toFixed(1)}s • Choose output caption style:
+                Duration: {videoDuration.toFixed(1)}s • Choose output caption style:
               </div>
             </div>
 
             {/* Language Mode Toggle: Hinglish vs English */}
-            <div className="flex items-center gap-1 bg-zinc-900/90 p-1 rounded-xl border border-zinc-700/80 self-start sm:self-auto">
+            <div className="flex items-center gap-1 bg-zinc-900/90 p-1 rounded-xl border border-zinc-700/80 self-start sm:self-auto shrink-0">
               <button
                 type="button"
                 onClick={() => setCaptionLanguage("hinglish")}
-                className={`px-3 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
+                className={`px-2.5 sm:px-3 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer ${
                   captionLanguage === "hinglish"
                     ? "bg-amber-500 text-black shadow-md shadow-amber-500/20"
                     : "text-zinc-400 hover:text-white"
                 }`}
               >
                 <span>🇮🇳 Hinglish</span>
-                <span className="text-[10px] opacity-80">(Recommended)</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setCaptionLanguage("english")}
-                className={`px-3 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer ${
+                className={`px-2.5 sm:px-3 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer ${
                   captionLanguage === "english"
                     ? "bg-amber-500 text-black shadow-md shadow-amber-500/20"
                     : "text-zinc-400 hover:text-white"
@@ -225,18 +224,18 @@ export default function CaptionTimeline({
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-zinc-800/60">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 border-t border-zinc-800/60">
             <div className="text-[11px] text-zinc-400">
               {captionLanguage === "hinglish" 
-                ? "✨ Hindi speech will become Roman Hinglish (e.g. 'Toh aaj hum jaanenge...')"
-                : "🌐 Speech will be translated into English (e.g. 'So today we will learn...')"}
+                ? "✨ Hindi speech will become Roman Hinglish"
+                : "🌐 Speech will be translated into English"}
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
               <button
                 onClick={handleRealAiTranscription}
                 disabled={isAiTranscribing}
-                className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black font-bold text-xs flex items-center gap-1.5 transition cursor-pointer shadow-md shadow-orange-500/20 disabled:opacity-50"
+                className="flex-1 sm:flex-none px-3.5 sm:px-4 py-2 sm:py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer shadow-md shadow-orange-500/20 disabled:opacity-50"
               >
                 {isAiTranscribing ? (
                   <>
@@ -246,15 +245,15 @@ export default function CaptionTimeline({
                 ) : (
                   <>
                     <Sparkles className="w-3.5 h-3.5 fill-black" />
-                    <span>🎤 Generate {captionLanguage === "hinglish" ? "Hinglish" : "English"} Captions</span>
+                    <span>🎤 Generate {captionLanguage === "hinglish" ? "Hinglish" : "English"}</span>
                   </>
                 )}
               </button>
               <button
                 onClick={() => setShowScriptModal(true)}
-                className="px-2.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium transition cursor-pointer"
+                className="px-2.5 py-2 sm:py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium transition cursor-pointer"
               >
-                ✍️ My Script
+                ✍️ Paste
               </button>
             </div>
           </div>

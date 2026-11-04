@@ -157,10 +157,10 @@ export default function AudioMixer({
         <label className="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider flex items-center justify-between">
           <span>Preset Loops</span>
           {selectedTrack === "custom" && (
-            <span className="text-[10px] text-amber-400 lowercase font-normal">(currently using custom audio)</span>
+            <span className="text-[10px] text-amber-400 lowercase font-normal">(using custom audio)</span>
           )}
         </label>
-        <div className="grid grid-cols-2 gap-2 mt-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
           {BGM_TRACKS.map(t => {
             const isSelected = selectedTrack === t.id;
             return (

@@ -96,28 +96,27 @@ export default function App() {
       />
 
       {/* Main Studio Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-5 lg:p-8">
         
-        {/* Banner Tagline */}
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3 bg-gradient-to-r from-amber-500/10 via-orange-500/5 to-transparent p-4 rounded-2xl border border-amber-500/20">
+        {/* Banner Tagline - Mobile Friendly */}
+        <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-gradient-to-r from-amber-500/10 via-orange-500/5 to-transparent p-3 sm:p-4 rounded-2xl border border-amber-500/20">
           <div>
-            <h1 className="text-base sm:text-lg font-black tracking-tight text-white flex items-center gap-2">
+            <h1 className="text-sm sm:text-base lg:text-lg font-black tracking-tight text-white flex items-center gap-1.5 sm:gap-2">
               <span>Raw Video → Ready-to-Post in Seconds</span>
-              <span className="text-xl">✨</span>
+              <span>✨</span>
             </h1>
-            <p className="text-xs sm:text-sm text-zinc-400 mt-0.5">
-              AI Dynamic Hinglish Captions • Hormozi Kinetic Bounces • Smart Emojis • Auto Ducking BGM
+            <p className="text-[11px] sm:text-xs lg:text-sm text-zinc-400 mt-0.5">
+              Hinglish Captions • Hormozi Kinetic Bounces • Smart Emojis • System BGM
             </p>
           </div>
 
-          {/* Quick Sample Reel Switcher */}
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-zinc-400 hidden sm:inline">Try Presets:</span>
+          {/* Quick Preset Selector */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <button
               onClick={() => loadSampleReel(0)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition cursor-pointer ${
+              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold border transition cursor-pointer ${
                 !customFileName && currentProject.id === SAMPLE_PROJECTS[0].id
-                  ? 'bg-amber-500 text-black border-amber-500'
+                  ? 'bg-amber-500 text-black border-amber-500 font-bold'
                   : 'bg-zinc-900 text-zinc-300 border-zinc-800 hover:border-zinc-700'
               }`}
             >
@@ -125,9 +124,9 @@ export default function App() {
             </button>
             <button
               onClick={() => loadSampleReel(1)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition cursor-pointer ${
+              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold border transition cursor-pointer ${
                 !customFileName && currentProject.id === SAMPLE_PROJECTS[1].id
-                  ? 'bg-amber-500 text-black border-amber-500'
+                  ? 'bg-amber-500 text-black border-amber-500 font-bold'
                   : 'bg-zinc-900 text-zinc-300 border-zinc-800 hover:border-zinc-700'
               }`}
             >
@@ -137,10 +136,10 @@ export default function App() {
         </div>
 
         {/* 2-Column Responsive Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-start">
           
-          {/* Left / Center Column: Video Player & Uploader */}
-          <div className="lg:col-span-5 flex flex-col items-center gap-4">
+          {/* Left Column: Video Player & Uploader */}
+          <div className="lg:col-span-5 flex flex-col items-center gap-3 sm:gap-4 w-full">
             <VideoPlayer
               videoSrc={videoSrc}
               words={words}
@@ -158,7 +157,7 @@ export default function App() {
             />
 
             {/* Video File Uploader */}
-            <div className="w-full max-w-[370px]">
+            <div className="w-full max-w-[340px] sm:max-w-[370px]">
               <VideoUploader
                 onVideoSelected={handleVideoUpload}
                 currentFileName={customFileName}
@@ -167,42 +166,42 @@ export default function App() {
           </div>
 
           {/* Right Column: Tabbed Controls (Captions, Style, Music) */}
-          <div className="lg:col-span-7 flex flex-col">
-            {/* Tab navigation headers */}
-            <div className="flex items-center gap-2 p-1 bg-zinc-900/80 border border-zinc-800 rounded-2xl mb-4">
+          <div className="lg:col-span-7 flex flex-col w-full">
+            {/* Tab navigation headers - mobile scrollable */}
+            <div className="flex items-center gap-1.5 sm:gap-2 p-1 bg-zinc-900/80 border border-zinc-800 rounded-2xl mb-3 sm:mb-4 overflow-x-auto no-scrollbar">
               <button
                 onClick={() => setActiveTab("captions")}
-                className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
+                className={`flex-1 min-w-[100px] py-2 px-2.5 sm:px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap ${
                   activeTab === "captions"
                     ? 'bg-amber-500 text-black shadow-md shadow-amber-500/20'
                     : 'text-zinc-400 hover:text-white'
                 }`}
               >
-                <Subtitles className="w-4 h-4" />
+                <Subtitles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 <span>Script & Emojis</span>
               </button>
 
               <button
                 onClick={() => setActiveTab("style")}
-                className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
+                className={`flex-1 min-w-[100px] py-2 px-2.5 sm:px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap ${
                   activeTab === "style"
                     ? 'bg-amber-500 text-black shadow-md shadow-amber-500/20'
                     : 'text-zinc-400 hover:text-white'
                 }`}
               >
-                <Palette className="w-4 h-4" />
+                <Palette className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 <span>Motion & Styles</span>
               </button>
 
               <button
                 onClick={() => setActiveTab("audio")}
-                className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
+                className={`flex-1 min-w-[100px] py-2 px-2.5 sm:px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap ${
                   activeTab === "audio"
                     ? 'bg-amber-500 text-black shadow-md shadow-amber-500/20'
                     : 'text-zinc-400 hover:text-white'
                 }`}
               >
-                <Music className="w-4 h-4" />
+                <Music className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 <span>BGM & Sound FX</span>
               </button>
             </div>
