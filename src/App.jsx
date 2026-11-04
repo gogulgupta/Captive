@@ -7,6 +7,7 @@ import StyleCustomizer from './components/StyleCustomizer';
 import AudioMixer from './components/AudioMixer';
 import ExportModal from './components/ExportModal';
 import AIPromptModal from './components/AIPromptModal';
+import BackendSettingsModal from './components/BackendSettingsModal';
 import { SAMPLE_PROJECTS } from './data/sampleVideos';
 import { CAPTION_PRESETS } from './data/presetStyles';
 import { startBgmSynth, stopBgmSynth } from './utils/audioSynth';
@@ -39,6 +40,7 @@ export default function App() {
   // Modals
   const [isExportOpen, setIsExportOpen] = useState(false);
   const [isAIOpen, setIsAIOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   // Start / stop synthesized or custom BGM on play/pause
   useEffect(() => {
@@ -90,6 +92,7 @@ export default function App() {
       {/* Top Navigation */}
       <Navbar
         onOpenAIModal={() => setIsAIOpen(true)}
+        onOpenSettings={() => setIsSettingsOpen(true)}
         onResetDemo={handleResetDemo}
         onExportClick={() => setIsExportOpen(true)}
         isProcessing={false}
@@ -221,6 +224,7 @@ export default function App() {
                   customFileName={customFileName}
                   videoFile={videoFile}
                   onOpenAIModal={() => setIsAIOpen(true)}
+                  onOpenSettings={() => setIsSettingsOpen(true)}
                 />
               )}
 
@@ -269,6 +273,12 @@ export default function App() {
       <AIPromptModal
         isOpen={isAIOpen}
         onClose={() => setIsAIOpen(false)}
+      />
+
+      {/* Backend Cloud Server Settings Modal */}
+      <BackendSettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
       />
     </div>
   );
