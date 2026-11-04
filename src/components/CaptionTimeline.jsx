@@ -12,9 +12,7 @@ export default function CaptionTimeline({
   onSeek,
   videoDuration = 12.5,
   customFileName,
-  videoFile,
-  onOpenAIModal,
-  onOpenSettings
+  videoFile
 }) {
   const [filterText, setFilterText] = useState("");
   const [activeEmojiPickerId, setActiveEmojiPickerId] = useState(null);
@@ -275,25 +273,14 @@ export default function CaptionTimeline({
 
       {/* Error Banner */}
       {errorMessage && (
-        <div className="mt-2 p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-xs text-rose-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div className="flex items-start gap-2">
-            <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <div>{errorMessage}</div>
-              {onOpenSettings && (
-                <button
-                  type="button"
-                  onClick={onOpenSettings}
-                  className="text-[11px] font-bold text-amber-400 hover:underline flex items-center gap-1 cursor-pointer"
-                >
-                  ⚙️ Click here to set Cloud Server URL for Phone
-                </button>
-              )}
-            </div>
+        <div className="mt-2 p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-xs text-rose-300 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+            <span>{errorMessage}</span>
           </div>
           <button
             onClick={() => setErrorMessage("")}
-            className="text-[11px] underline text-rose-300 hover:text-white shrink-0 self-end sm:self-auto cursor-pointer"
+            className="text-[11px] underline text-rose-300 hover:text-white shrink-0 cursor-pointer"
           >
             Dismiss
           </button>
