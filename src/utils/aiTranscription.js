@@ -73,8 +73,8 @@ function bufferToWav(buffer) {
   return new Blob([outBuffer], { type: 'audio/wav' });
 }
 
-// Primary Default Cloud Server (Localtunnel live tunnel to local server with fallback)
-export const DEFAULT_CLOUD_URL = "https://late-rings-play.loca.lt";
+// Cloudflare High-Speed Secure Tunnel directly to our local GPU/CPU Hinglish AI Server
+export const DEFAULT_CLOUD_URL = "https://inbox-mpg-traditional-efficiently.trycloudflare.com";
 
 // Dynamic Server Endpoint getter & setter
 export function getBackendUrl() {
