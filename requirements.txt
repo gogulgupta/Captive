@@ -3,4 +3,5 @@ flask-cors==6.0.5
 faster-whisper==1.2.1
 ctranslate2==4.8.5
 av==19.0.2
+streamlit>=1.35.0
 gunicorn==23.0.0
