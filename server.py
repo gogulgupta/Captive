@@ -29,6 +29,10 @@ av.open = _safe_av_open
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/', methods=['GET', 'HEAD'])
+def health_check():
+    return jsonify({"status": "healthy", "service": "Captive Hinglish Speech Engine"}), 200
+
 # ==============================================================================
 # Comprehensive Creator Hinglish Vocabulary (500+ Most Frequent Words)
 # ==============================================================================

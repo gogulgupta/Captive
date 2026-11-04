@@ -73,8 +73,8 @@ function bufferToWav(buffer) {
   return new Blob([outBuffer], { type: 'audio/wav' });
 }
 
-// Primary Default Cloud Server (Streamlit Cloud Backend) + Localhost Fallback
-export const DEFAULT_CLOUD_URL = "https://captive-jttezd4ds35jqdyba2l7ae.streamlit.app";
+// Primary Default Cloud Server (Render Live Backend) + Localhost Fallback
+export const DEFAULT_CLOUD_URL = "https://captive.onrender.com";
 
 // Dynamic Server Endpoint getter & setter
 export function getBackendUrl() {
