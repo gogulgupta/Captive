@@ -73,9 +73,12 @@ function bufferToWav(buffer) {
   return new Blob([outBuffer], { type: 'audio/wav' });
 }
 
+// Dynamic Server Endpoint: Supports Localhost OR Cloud Backend URL (Render, Railway, HuggingFace, etc.)
+export const SERVER_URL = import.meta.env.VITE_BACKEND_URL || localStorage.getItem("captive_backend_url") || "http://127.0.0.1:5000";
+
 /**
- * Send WAV blob to local Python transcription server (faster-whisper)
- * Server runs at http://127.0.0.1:5000/transcribe
+ * Send WAV blob to Python transcription server (faster-whisper)
+ * Works with Localhost or Deployed Cloud Server
  * mode: 'hinglish' | 'english'
  * Returns array of {id, text, start, end, emoji} objects
  */
@@ -84,16 +87,18 @@ export async function transcribeWithLocalServer(wavBlob, mode = 'hinglish') {
   form.append('file', wavBlob, 'audio.wav');
   form.append('mode', mode);
 
+  const endpoint = `${SERVER_URL.replace(/\/+$/, '')}/transcribe`;
+
   let response;
   try {
-    response = await fetch('http://127.0.0.1:5000/transcribe', {
+    response = await fetch(endpoint, {
       method: 'POST',
       body: form,
     });
   } catch (networkErr) {
     throw new Error(
-      'Local transcription server se connect nahi ho paya! ' +
-      'Pehle terminal me ye chalao: python server.py'
+      `Backend server (${SERVER_URL}) se connect nahi ho paya! ` +
+      'Agar local chala rahe hain toh terminal me "python server.py" run karein, ya Settings me apna cloud backend URL dalein.'
     );
   }
 
