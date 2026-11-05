@@ -49,8 +49,9 @@ export default function CaptionTimeline({
       setErrorMessage("");
       setTranscribeStatus("1/3 Video se audio extract ho raha hai...");
 
-      // Extract 16kHz WAV from video
-      const wavBlob = await extractAudioFromVideo(videoFile, Math.min(videoDuration || 120, 180));
+      // Extract 16kHz WAV from full video duration (no duration cap)
+      const fullDur = Math.max(videoDuration || 300, 3600);
+      const wavBlob = await extractAudioFromVideo(videoFile, fullDur);
 
       setTranscribeStatus("2/3 Audio server ko bhej rahe hain...");
 

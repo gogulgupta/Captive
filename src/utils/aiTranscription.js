@@ -5,7 +5,7 @@
  * Extract audio from a video File as a 16kHz mono WAV Blob
  * Uses browser Web Audio API — no FFmpeg needed
  */
-export async function extractAudioFromVideo(file, maxDurationSeconds = 120) {
+export async function extractAudioFromVideo(file, maxDurationSeconds = 3600) {
   const arrayBuffer = await file.arrayBuffer();
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
   const audioCtx = new AudioContextClass();
@@ -13,7 +13,7 @@ export async function extractAudioFromVideo(file, maxDurationSeconds = 120) {
   // Decode audio data from video container
   const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
 
-  // Resample to 16kHz Mono WAV (standard for Whisper)
+  // Resample full video audio to 16kHz Mono WAV (standard for Whisper)
   const targetSampleRate = 16000;
   const duration = Math.min(audioBuffer.duration, maxDurationSeconds);
   const totalSamples = Math.floor(duration * targetSampleRate);
