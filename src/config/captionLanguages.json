@@ -1,0 +1,22 @@
+{
+  "languages": [
+    {
+      "id": "hinglish",
+      "name": "Hinglish (Hindi in Roman English)",
+      "script": "Latin",
+      "fontFamily": "Impact, Montserrat, system-ui",
+      "supportsAutoEmojis": true,
+      "schwaDeletion": true,
+      "description": "Creator-style Roman Hindi captions with viral slang dictionary."
+    },
+    {
+      "id": "english",
+      "name": "English",
+      "script": "Latin",
+      "fontFamily": "Inter, Montserrat, sans-serif",
+      "supportsAutoEmojis": true,
+      "schwaDeletion": false,
+      "description": "Standard English captions with kinetic word animations."
+    }
+  ]
+}

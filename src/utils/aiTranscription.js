@@ -73,15 +73,12 @@ function bufferToWav(buffer) {
   return new Blob([outBuffer], { type: 'audio/wav' });
 }
 
-// Local FastAPI & Flask server direct URLs (tries port 8000 first, then 5000)
+// Local unified FastAPI engine endpoint (Layer 1: audio_extractor + transcriber)
 export const LOCAL_SERVER_URL = "http://127.0.0.1:8000";
-export const LOCAL_FALLBACK_URL = "http://127.0.0.1:5000";
 
-// Public cloud backend URL (for deployed app or phone)
+// Public cloud backend URL (fallback for deployed testing)
 export const DEFAULT_CLOUD_URL = "https://inbox-mpg-traditional-efficiently.trycloudflare.com";
 
-// Auto-detect environment:
-// If running on laptop (localhost:5173 / 127.0.0.1), use direct local server for zero lag
 export function getBackendUrl() {
   const custom = localStorage.getItem("captive_backend_url");
   if (custom) return custom;
@@ -102,14 +99,13 @@ export function setBackendUrl(url) {
 }
 
 /**
- * Send WAV blob to Python transcription server (faster-whisper)
- * Works with Localhost or Deployed Cloud Server
- * mode: 'hinglish' | 'english'
- * Returns array of {id, text, start, end, emoji} objects
+ * Send Video or WAV to Python Layer 1 transcription server (FastAPI + faster-whisper)
+ * Strictly receives: [{"word": "str", "start": float, "end": float}]
  */
-export async function transcribeWithLocalServer(wavBlob, mode = 'hinglish') {
+export async function transcribeWithLocalServer(mediaBlobOrFile, mode = 'hinglish') {
   const form = new FormData();
-  form.append('file', wavBlob, 'audio.wav');
+  const filename = mediaBlobOrFile.name || 'video_input.mp4';
+  form.append('file', mediaBlobOrFile, filename);
   form.append('mode', mode);
 
   const serverUrl = getBackendUrl();
@@ -127,7 +123,7 @@ export async function transcribeWithLocalServer(wavBlob, mode = 'hinglish') {
   } catch (networkErr) {
     throw new Error(
       `Backend server (${serverUrl}) se connect nahi ho paya! ` +
-      'Kripya internet check karein ya server reload hone ka wait karein.'
+      'Kripya terminal me "python backend/main.py" chalayein.'
     );
   }
 
@@ -137,15 +133,17 @@ export async function transcribeWithLocalServer(wavBlob, mode = 'hinglish') {
   }
 
   const data = await response.json();
-  const words = data.words || [];
+  const rawWords = Array.isArray(data) ? data : (data.words || []);
 
-  if (words.length === 0) {
+  if (rawWords.length === 0) {
     throw new Error('Audio me koi speech detect nahi hui. Kripya dobara try karein.');
   }
 
-  return words.map((w, idx) => ({
-    id: w.id || idx + 1,
-    text: String(w.text || '').trim(),
+  // Normalize to application format
+  return rawWords.map((w, idx) => ({
+    id: idx + 1,
+    word: String(w.word || w.text || '').trim(),
+    text: String(w.word || w.text || '').trim(),
     start: Number(w.start || 0),
     end: Number(w.end || (Number(w.start || 0) + 0.4)),
     emoji: w.emoji || ''
