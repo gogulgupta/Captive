@@ -73,14 +73,15 @@ function bufferToWav(buffer) {
   return new Blob([outBuffer], { type: 'audio/wav' });
 }
 
-// Local server direct URL (default for lightning-fast transcription on laptop)
-export const LOCAL_SERVER_URL = "http://127.0.0.1:5000";
+// Local FastAPI & Flask server direct URLs (tries port 8000 first, then 5000)
+export const LOCAL_SERVER_URL = "http://127.0.0.1:8000";
+export const LOCAL_FALLBACK_URL = "http://127.0.0.1:5000";
 
 // Public cloud backend URL (for deployed app or phone)
 export const DEFAULT_CLOUD_URL = "https://inbox-mpg-traditional-efficiently.trycloudflare.com";
 
 // Auto-detect environment:
-// If running on laptop (localhost:5173 / 127.0.0.1), use 100% direct localhost:5000 for instant local response!
+// If running on laptop (localhost:5173 / 127.0.0.1), use direct local server for zero lag
 export function getBackendUrl() {
   const custom = localStorage.getItem("captive_backend_url");
   if (custom) return custom;
