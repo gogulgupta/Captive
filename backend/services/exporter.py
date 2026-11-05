@@ -139,3 +139,4 @@ def burn_captions_to_video(
                 os.unlink(tmp_ass_path)
             except Exception:
                 pass
+

@@ -41,3 +41,4 @@ def extract_audio(video_path: str, output_path: str = None) -> str:
         raise RuntimeError(f"FFmpeg extraction failed: {process.stderr}")
 
     return output_path
+

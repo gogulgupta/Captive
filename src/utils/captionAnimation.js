@@ -187,3 +187,4 @@ export function renderCaptionsToCanvas(ctx, words, currentTime, preset, canvasWi
 
   ctx.restore();
 }
+
