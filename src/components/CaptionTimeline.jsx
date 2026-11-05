@@ -47,24 +47,19 @@ export default function CaptionTimeline({
     try {
       setIsAiTranscribing(true);
       setErrorMessage("");
-      setTranscribeStatus("1/3 Video se audio extract ho raha hai...");
+      setTranscribeStatus("1/2 Video backend server ko bhej rahe hain...");
 
-      // Extract 16kHz WAV from full video duration (no duration cap)
-      const fullDur = Math.max(videoDuration || 300, 3600);
-      const wavBlob = await extractAudioFromVideo(videoFile, fullDur);
+      // Send the actual raw video file directly to FastAPI backend
+      // Backend uses local FFmpeg to extract full 100% loss-free audio from start to finish
+      setTranscribeStatus(`2/2 AI ${captionLanguage.toUpperCase()} mode me poori video transcribe kar raha hai...`);
+      const transcribedWords = await transcribeWithLocalServer(videoFile, captionLanguage);
 
-      setTranscribeStatus("2/3 Audio server ko bhej rahe hain...");
-
-      // Send to local Python transcription server with user-selected mode
-      setTranscribeStatus(`2/3 AI ${captionLanguage.toUpperCase()} mode me transcribe kar raha hai...`);
-      const transcribedWords = await transcribeWithLocalServer(wavBlob, captionLanguage);
-
-      setTranscribeStatus("3/3 Emojis detect ho rahe hain...");
+      setTranscribeStatus("✨ Emojis detect ho rahe hain...");
 
       // Enrich with auto-detected emojis
       const enriched = transcribedWords.map(w => ({
         ...w,
-        emoji: w.emoji || autoDetectEmoji(w.text) || ""
+        emoji: w.emoji || autoDetectEmoji(w.text || w.word) || ""
       }));
 
       setWords(enriched);
